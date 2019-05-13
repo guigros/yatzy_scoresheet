@@ -44,7 +44,7 @@
         <q-input :class="['cell', 'grid-row-5', 'grid-col-' + (index + 2), 'text-color-' + index]" type="number" hide-underline @input="updateScore(index, inputType.FOUR)" placeholder="0" v-model="players[index].score.four" :key="index + '-' + player.name + '-5'"/>
         <q-input :class="['cell', 'grid-row-6', 'grid-col-' + (index + 2), 'text-color-' + index]" type="number" hide-underline @input="updateScore(index, inputType.FIVE)" placeholder="0" v-model="players[index].score.five" :key="index + '-' + player.name + '-6'"/>
         <q-input :class="['cell', 'grid-row-7', 'grid-col-' + (index + 2), 'text-color-' + index]" type="number" hide-underline @input="updateScore(index, inputType.SIX)" placeholder="0" v-model="players[index].score.six" :key="index + '-' + player.name + '-7'"/>
-        <q-input :class="['cell', 'grid-row-8', 'grid-col-' + (index + 2), 'text-color-' + index]" disable hide-underline :value="getHigherTotal(index)" :key="index + '-' + player.name + '-8'"/>
+        <q-input :class="['cell', 'grid-row-8', 'grid-col-' + (index + 2), 'text-color-' + index]" disable hide-underline :value="getHigherTotal(index)  + ' (' + getBonusRange(index) + ')'" :key="index + '-' + player.name + '-8'"/>
         <q-input :class="['cell', 'grid-row-9', 'grid-col-' + (index + 2), 'text-color-' + index]" type="number" disable hide-underline :value="getBonus(index)" :placeholder="$store.getters['game/bonus'].toString()" :key="index + '-' + player.name + '-9'"/>
         <q-input :class="['cell', 'grid-row-10', 'grid-col-' + (index + 2), 'text-color-' + index]" type="number" hide-underline @input="updateScore(index, inputType.THREE_OF_A_KIND)" placeholder="0" v-model="players[index].score.threeOfAKind" :key="index + '-' + player.name + '-10'"/>
         <q-input :class="['cell', 'grid-row-11', 'grid-col-' + (index + 2), 'text-color-' + index]" type="number" hide-underline @input="updateScore(index, inputType.FOUR_OF_A_KIND)" placeholder="0" v-model="players[index].score.fourOfAKind" :key="index + '-' + player.name + '-11'"/>
@@ -204,6 +204,35 @@ export default {
       if (this.players[playerIndex].score.higherTotal >= this.$store.getters['game/bonusThreshold']) {
         return this.$store.getters['game/bonus']
       } else return null
+    },
+
+    getBonusRange (playerIndex) {
+      var bonusRange = this.getScoreRange(1, this.players[playerIndex].score.one) +
+                          this.getScoreRange(2, this.players[playerIndex].score.two) +
+                            this.getScoreRange(3, this.players[playerIndex].score.three) +
+                              this.getScoreRange(4, this.players[playerIndex].score.four) +
+                                this.getScoreRange(5, this.players[playerIndex].score.five) +
+                                  this.getScoreRange(6, this.players[playerIndex].score.six)
+
+      if (bonusRange > 0) {
+        bonusRange = '+' + bonusRange
+      }
+
+      return bonusRange
+    },
+
+    getScoreRange (score, currentVal) {
+      var range = 0
+
+      if (!Number.isNaN(currentVal) && currentVal !== null) {
+        if (currentVal / 3 < 1) {
+          range = ((1 - (currentVal / (score * 3))) * (score * 3)) * -1
+        } else {
+          range = ((currentVal / (score * 3)) - 1) * (score * 3)
+        }
+      }
+
+      return Math.round(range)
     }
   }
 }

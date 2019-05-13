@@ -32,11 +32,15 @@
         inset-delimiter
       >
         <q-item @click.native="openNewGameDialog">
-          <q-item-side icon="create" />
+          <q-item-side icon="add" />
           <q-item-main label="New Game"/>
         </q-item>
-        <q-item>
-          <q-item-side icon="history" />
+        <q-item @click.native="openGamePage">
+          <q-item-side icon="create" />
+          <q-item-main label="Current Game"/>
+        </q-item>
+        <q-item @click.native="openHistoryPage">
+          <q-item-side icon="history"/>
           <q-item-main label="History"/>
         </q-item>
       </q-list>
@@ -78,6 +82,15 @@ export default {
       if (Array.isArray(playerList) && playerList.length > 0) {
         this.$store.dispatch('game/newGame', playerList)
       }
+      this.closeNewGameDialog()
+      this.openGamePage()
+    },
+    openHistoryPage () {
+      this.$router.push({ path: '/history' })
+      this.closeNewGameDialog()
+    },
+    openGamePage () {
+      this.$router.push({ path: '/' })
       this.closeNewGameDialog()
     }
   }
