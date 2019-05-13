@@ -1,8 +1,8 @@
 {
-  "name": "yatssouille",
+  "name": "yatzy-score-sheet",
   "version": "0.0.1",
   "description": "Yatzee score sheet",
-  "productName": "yatssouille",
+  "productName": "yatzy-score-sheet",
   "cordovaId": "org.cordova.quasar.app",
   "author": "Grow <e.guillaume.gros@gmail.com>",
   "private": true,

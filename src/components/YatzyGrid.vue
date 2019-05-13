@@ -14,7 +14,7 @@
       <div class="cell grid-row-12 grid-col-1">Full House</div>
       <div class="cell grid-row-13 grid-col-1">Small Straight</div>
       <div class="cell grid-row-14 grid-col-1">Large Straight</div>
-      <div class="cell grid-row-15 grid-col-1">YATSSOUILLE</div>
+      <div class="cell grid-row-15 grid-col-1">Yatzy</div>
       <div class="cell grid-row-16 grid-col-1">Chance</div>
       <div class="cell grid-row-17 grid-col-1">Total</div>
 <!--       <template v-for="(player, index) in players">

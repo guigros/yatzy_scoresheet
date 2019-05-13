@@ -17,7 +17,7 @@
         </q-btn>
 
         <q-toolbar-title>
-          Yatssouille App
+          Yatzy score sheet
         </q-toolbar-title>
       </q-toolbar>
     </q-layout-header>
