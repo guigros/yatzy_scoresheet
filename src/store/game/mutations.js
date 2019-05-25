@@ -1,5 +1,5 @@
 export function players (state, players) {
-  console.log('store - mutation { players }', players)
+  // console.log('store - mutation { players }', players)
   state.players = players
 }
 

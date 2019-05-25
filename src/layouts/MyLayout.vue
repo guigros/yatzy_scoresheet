@@ -19,6 +19,8 @@
         <q-toolbar-title>
           Yatzy score sheet
         </q-toolbar-title>
+
+        <q-btn flat round dense icon="autorenew" @click.native="openResetScoreDialog"/>
       </q-toolbar>
     </q-layout-header>
 
@@ -49,24 +51,28 @@
     <q-page-container>
       <router-view />
       <NewGameDialog :openDialog="newGameDialog" v-on:close="closeNewGameDialog" v-on:new-game="createNewGame"></NewGameDialog>
+      <ResetScoreDialog :openDialog="resetScoreDialog" v-on:close="closeResetScoreDialog" v-on:reset-score="restartCurrentGame"></ResetScoreDialog>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
 import NewGameDialog from '../components/NewGameDialog'
+import ResetScoreDialog from '../components/ResetScoreDialog'
 
 export default {
   name: 'MyLayout',
 
   components: {
-    NewGameDialog
+    NewGameDialog,
+    ResetScoreDialog
   },
 
   data () {
     return {
       leftDrawerOpen: this.$q.platform.is.desktop,
-      newGameDialog: false
+      newGameDialog: false,
+      resetScoreDialog: false
     }
   },
 
@@ -92,6 +98,20 @@ export default {
     openGamePage () {
       this.$router.push({ path: '/' })
       this.closeNewGameDialog()
+    },
+    openResetScoreDialog () {
+      var playerList = this.$store.getters['game/players']
+      if (Array.isArray(playerList) && playerList.length > 0) {
+        this.resetScoreDialog = true
+      }
+    },
+    closeResetScoreDialog () {
+      this.resetScoreDialog = false
+    },
+    restartCurrentGame () {
+      this.closeResetScoreDialog()
+      this.$store.dispatch('game/resetScore')
+      this.createNewGame()
     }
   }
 }

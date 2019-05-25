@@ -5,7 +5,6 @@
     @cancel="onCancel"
     @ok="onOk"
     @show="onShow"
-    @hide="onHide"
   >
     <!-- This or use "title" prop on <q-dialog> -->
     <span slot="title">New game setup</span>
@@ -64,18 +63,15 @@ export default {
 
   methods: {
     onOk () {
-      console.log('ok')
+      // console.log('ok')
       this.$emit('new-game', this.playerList)
     },
     onCancel () {
-      console.log('cancel')
+      // console.log('cancel')
       this.$emit('close')
     },
     onShow () {
       this.$nextTick(() => { this.$refs.inputPlayerName.focus() })
-    },
-    onHide () {
-      console.log('hide')
     },
     addPlayer () {
       this.playerList.push(new Player(this.currentName))
